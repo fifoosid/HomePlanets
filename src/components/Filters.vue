@@ -37,7 +37,7 @@ export default {
         sortCriteria: state => state.sortCriteria,
     }),
     methods: {
-        filterData(event) {
+        _filterData(event) {
 			store.dispatch(SETFILTERTEXT, event.target.value);
 
             if (!this.filterText) {
@@ -47,21 +47,31 @@ export default {
 
 			const containsRegex = new RegExp(this.filterText.toLowerCase());
 			const newData = this.allData.filter(item => containsRegex.test(item.name.toLowerCase()));
-			store.dispatch(SETDATA, newData);
+            store.dispatch(SETDATA, newData);
+        },
+
+        filterData(event) {
+            this._filterData(event);
+            this._sortData();
         },
 
         sortData(event) {
 			store.dispatch(SETSORTCRITERIA, event.detail.selectedOption.textContent.toLowerCase());
 
-			const tempData = this.data.map(item => item);
 			if (this.sortCriteria !== "none") {
-				tempData.sort((a, b) => {
-					return this.compare(a, b, this.sortCriteria);
-				})
-
-				store.dispatch(SETDATA, tempData);
+                this._sortData();
 			}
-		},
+        },
+
+        _sortData() {
+			const tempData = this.data.map(item => item);
+
+            tempData.sort((a, b) => {
+                return this.compare(a, b, this.sortCriteria);
+            });
+
+            store.dispatch(SETDATA, tempData);
+        },
 
 		compare(a, b, property) {
 			const stringProps = ["name", "homeworld"];
