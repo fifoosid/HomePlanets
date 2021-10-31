@@ -1,11 +1,13 @@
 <template>
   <div>
+    <Filters />
     <Table />
   </div>
 </template>
 
 <script>
 import Table from './components/Table.vue'
+import Filters from './components/Filters.vue'
 import "@ui5/webcomponents/dist/Popover.js";
 import "@ui5/webcomponents/dist/Badge.js";
 import "@ui5/webcomponents/dist/Link.js";
@@ -22,6 +24,7 @@ export default {
   name: 'App',
   components: {
     Table,
+    Filters,
   }
 }
 

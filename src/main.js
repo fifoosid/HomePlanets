@@ -11,7 +11,3 @@ new Vue({
 }).$mount('#app');
 
 Vue.use(BootstrapVue);
-
-export {
-  store,
-}
